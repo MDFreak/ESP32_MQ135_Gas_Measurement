@@ -1,38 +1,25 @@
-# MD_ESP32-Test
+# ESP32_MQ135_Gas_Measurement
 
-This project is my personal development enirement to implement a general base programming system using arduino framework
+This project is my personal development is derived from general base programming system using arduino framework
 
-General idea:
-Different target systems using Arduinos, ESP32 or STM32 controllers should be configurable.
-With (maybe non) simple manipulating configuration file for standard demands it should be
-possible to start a target system with "plug & connect and configure & play".
-This general idea is derived from VSCode using platormIO (does it with SW).
-Marlin project realises the same concept generating a configurable firmware for 3d printers
+Project:
+Concerning Corona virus we found out that fresh air exchange inside our rooms is to be improved.  
 
-Pathway:
-Small projects and experiments are to be realized.
-Every project uses a µC and some external components. These will be integrated and selectable
+Breaf description of system and dependancies:
 
-Breaf system description:
+- Visual Studio Code with PlatformIO is used as developing environment
 
-- md_lib
+- official libraries are linked to project path <project>\.pio\libdeps\esp32dev.
+  Most they are included in PIO library fetch, that insert then in platformio.ini as "lib_deps = ..."
+  A few are added manual. 
 
-This repository is the development repository and uses a collection of other repositories.
-This collection is named 'md-lib' and is placed in PIO Projects folder parallel to projects.
-Inside your project there is pretty extended file 'prj_config.h'. Using this file you
-connect HW with HW (components, pins), HW with SW (libraries, divers etc.).
-As well you may conigure SW like tasking, using dual core, using interrupt or polling.
+- Additional libraries are part of the game. They are stored outside project in projets path as a project 
+  parallel to all other projects. They are organized as own public repositories in path \md_lib.
+  This is to be implemented in platformio.ini as lib_extra_dirs = ./../md_lib  
+  - library md_utils is collection of my home made tools for several purposes  
+  - the other libraries of md_lib are easy to use interfaces/drivers for standard libraries
 
-project 'md_lib': test routines to test libraries - somehow a template (to be done)
+- The system is designed to use is with various hardware, that mainly is to be configured. 
+  This is done using the configuration files "prj_config.h" in src directory 
 
-- md_tools
 
-It containes the file 'md_defines,h', which is the root of all configurations.
-In 'md_defines' every configurable component is to be declared.
-The library containes some functionalities or glabel usage as for example measurement filtering.
-
-- other libraries of 'md_lib'
-
-Every library inside 'md-lib' is a separate repository. Most of them are implemented as
-user interface to the common published driver libraries.
-example: WiFi library provides an easy to use scan and login feature for a locale WiFi.
