@@ -19,8 +19,8 @@
   // --- configuration selections
     // --- debugging
       //#define DEBUG_MODE      CFG_DEBUG_NONE
-      //#define DEBUG_MODE      CFG_DEBUG_STARTUP
-      #define DEBUG_MODE      CFG_DEBUG_ACTIONS
+      #define DEBUG_MODE      CFG_DEBUG_STARTUP
+      //#define DEBUG_MODE      CFG_DEBUG_ACTIONS
       //#define DEBUG_MODE      CFG_DEBUG_DETAILS
 
     // --- board
@@ -33,7 +33,7 @@
     // --- components
       // --- system
         #define USE_TASKING           FALSE
-        #define USE_LED_BLINK         TRUE
+        #define USE_LED_BLINK         FALSE
         #define USE_I2C                1     // [0, 1, 2] limited by board
 
       // --- network
@@ -52,7 +52,6 @@
                             // MC_UO_OLED_096_AZ, MC_UO_OLED_130_AZ
                   #if (USE_OLED_I2C > OFF)
                       #define OLED1   MC_UO_OLED_130_AZ
-
                     #endif
                   #if (USE_OLED_I2C > 1)
                       #define OLED2   TRUE
@@ -93,11 +92,11 @@
 
       // --- sensors
         #define USE_DS18B20_1W        0   // [0, 1, ....] limited by 1W connections
-        #define USE_BME280_I2C        1   // [0, 1, ....] limited by I2C channels/addr
+        #define USE_BME280_I2C        0   // [0, 1, ....] limited by I2C channels/addr
         #define USE_MQ135_GAS_ANA     1   // [0, 1, ....] limited by analog inputs
 
       // --- memories
-        #define USE_FRAM_I2C        1  // [0, 1, ...] limited by I2C channel/addr
+        #define USE_FRAM_I2C          0   // [0, 1, ...] limited by I2C channel/addr
 
   // ******************************************
   // --- board management
@@ -626,7 +625,7 @@
           #define MQ135_FILT      15       // floating  measure filtering
           #define MQ135_ThresFilt 25       // threshold measure filtering
           #define MQ135_EM_WIN    100      // window for traffic light
-          //#define MQ135_EM_MID    2350    // green < (MID-(WIN/2) < yellow < (MID+(WIN/2) < red
+          #define MQ135_EM_MID    1000     // green < (MID-(WIN/2) < yellow < (MID+(WIN/2) < red
         #endif
 
       #ifdef USE_MEASURE_CYCLE

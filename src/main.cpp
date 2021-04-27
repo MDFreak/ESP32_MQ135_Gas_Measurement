@@ -455,7 +455,7 @@
 
   // ------ traffic Light of gas sensor --------------
     #if (USE_MQ135_GAS_ANA > OFF)
-        int16_t showTrafficLight(int16_t inval, int16_t inthres);
+        int16_t showTrafficLight(int16_t inval, );
       #endif
 
 // --- system startup
