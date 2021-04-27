@@ -105,21 +105,21 @@
       #endif // USE_WEBSERVER
 
   // ------ sensors ----------------------
-    #if (USE_DS18B20_1W > OFF)
+    #if ( USE_DS18B20_1W    > OFF)
         OneWire dsOneWire(DS_ONEWIRE_PIN);
         DallasTemperature dsSensors(&dsOneWire);
         DeviceAddress     dsAddr[DS18B20_ANZ];
         float dsTemp[DS18B20_ANZ];
       #endif
 
-    #if ( USE_BME280_I2C > OFF )
+    #if ( USE_BME280_I2C    > OFF )
         Adafruit_BME280 bme;
         Adafruit_Sensor *bme_temp = bme.getTemperatureSensor();
         Adafruit_Sensor *bme_pressure = bme.getPressureSensor();
         Adafruit_Sensor *bme_humidity = bme.getHumiditySensor();
       #endif
 
-    #if (USE_MQ135_GAS_ANA > OFF)
+    #if ( USE_MQ135_GAS_ANA > OFF )
         msTimer measT   = msTimer(MEASURE_CYCLE_MS);
         filterValue valGas(MQ135_FILT, 1);
         filterValue tholdGas(MQ135_ThresFilt,1);
@@ -455,7 +455,7 @@
 
   // ------ traffic Light of gas sensor --------------
     #if (USE_MQ135_GAS_ANA > OFF)
-        int16_t showTrafficLight(int16_t inval, );
+        int16_t showTrafficLight(int16_t inval, const int16_t inthres);
       #endif
 
 // --- system startup
@@ -490,21 +490,21 @@
               digitalWrite(PIN_TL_GREEN, OFF);
               digitalWrite(PIN_TL_RED, OFF);
               digitalWrite(PIN_TL_YELLOW, OFF);
-              /*
-                ledcSetup(PIN_TL_GREEN,  PWM_LEDS_FREQ, PWM_LEDS_RES);
-                ledcSetup(PIN_TL_YELLOW, PWM_LEDS_FREQ, PWM_LEDS_RES);
-                ledcSetup(PIN_TL_RED,    PWM_LEDS_FREQ, PWM_LEDS_RES);
-                ledcAttachPin(PIN_TL_GREEN,  PWM_TL_GREEN);
-                ledcAttachPin(PIN_TL_YELLOW, PWM_TL_YELLOW);
-                ledcAttachPin(PIN_TL_RED,    PWM_TL_RED);
-                ledcWrite(PIN_TL_GREEN, 255);
-                usleep(200000);
-                ledcWrite(PIN_TL_GREEN, 0);
-                ledcWrite(PIN_TL_YELLOW, 255);
-                usleep(200000);
-                ledcWrite(PIN_TL_YELLOW, 0);
-                ledcWrite(PIN_TL_RED, 255);
-              */
+                /*
+                  ledcSetup(PIN_TL_GREEN,  PWM_LEDS_FREQ, PWM_LEDS_RES);
+                  ledcSetup(PIN_TL_YELLOW, PWM_LEDS_FREQ, PWM_LEDS_RES);
+                  ledcSetup(PIN_TL_RED,    PWM_LEDS_FREQ, PWM_LEDS_RES);
+                  ledcAttachPin(PIN_TL_GREEN,  PWM_TL_GREEN);
+                  ledcAttachPin(PIN_TL_YELLOW, PWM_TL_YELLOW);
+                  ledcAttachPin(PIN_TL_RED,    PWM_TL_RED);
+                  ledcWrite(PIN_TL_GREEN, 255);
+                  usleep(200000);
+                  ledcWrite(PIN_TL_GREEN, 0);
+                  ledcWrite(PIN_TL_YELLOW, 255);
+                  usleep(200000);
+                  ledcWrite(PIN_TL_YELLOW, 0);
+                  ledcWrite(PIN_TL_RED, 255);
+                */
               ledcWrite(PIN_TL_RED, 0);
             #endif
           startDisp();
@@ -701,40 +701,40 @@
           {
             dispT.startT();
               #ifdef RUN_OLED_TEST
-                oled.clearBuffer();
-                switch (oledIdx)
-                  {
-                    case 0:
-                      oled.prepare();
-                      oled.box_frame();
-                      break;
-                    case 1:
-                      oled.disc_circle();
-                      oled.sendBuffer();
-                      break;
-                    case 2:
-                      oled.r_frame_box();
-                      break;
-                    case 3:
-                      oled.prepare();
-                      oled.string_orientation();
-                      oledIdx--;
-                      break;
-                    case 4:
-                      oled.line();
-                      break;
-                    case 5:
-                      oled.triangle();
-                      break;
-                    case 6:
-                      oled.bitmap();
-                      break;
-                    default:
-                      break;
-                  }
-                if (++oledIdx > 6) { oledIdx = 0; }
-                oled.sendBuffer();
-              #endif
+                  oled.clearBuffer();
+                  switch (oledIdx)
+                    {
+                      case 0:
+                        oled.prepare();
+                        oled.box_frame();
+                        break;
+                      case 1:
+                        oled.disc_circle();
+                        oled.sendBuffer();
+                        break;
+                      case 2:
+                        oled.r_frame_box();
+                        break;
+                      case 3:
+                        oled.prepare();
+                        oled.string_orientation();
+                        oledIdx--;
+                        break;
+                      case 4:
+                        oled.line();
+                        break;
+                      case 5:
+                        oled.triangle();
+                        break;
+                      case 6:
+                        oled.bitmap();
+                        break;
+                      default:
+                        break;
+                    }
+                  if (++oledIdx > 6) { oledIdx = 0; }
+                  oled.sendBuffer();
+                #endif
               //#ifdef OLED_NOTEST
                 oledIdx++;
                 switch (oledIdx)
@@ -765,14 +765,14 @@
                   case 4:
                     #if (USE_MQ135_GAS_ANA > OFF)
                         outStr = "";
-                        _tmp = showTrafficLight(gasValue, gasThres); // -> rel to defined break point
+                        _tmp = showTrafficLight(gasValue, MQ135_EM_MID); // -> rel to defined break point
                         outStr = "CO2 ";
                         outStr.concat(gasValue);
                         outStr.concat(" (");
                         outStr.concat(_tmp);
                         outStr.concat(")");
                         dispText(outStr ,  0, 1, outStr.length());
-                                SOUT(outStr);
+                                SOUTLN(outStr);
                       #endif
                     break;
                   case 5:
@@ -789,7 +789,7 @@
                         dispText(outStr ,  0, 3, outStr.length());
                       #endif
                     break;
-                   default:
+                  default:
                     oledIdx = 0;
                     break;
                   }
@@ -817,7 +817,7 @@
           }
         #endif
       // ----------------------
-      sleep(1);
+      usleep(200000);
     }
 // --- subroutine drivers
   #if (USE_DS18B20_1W > OFF)
@@ -856,10 +856,10 @@
     #endif
 
   #if (USE_MQ135_GAS_ANA > OFF)
-      int16_t showTrafficLight(int16_t inval, int16_t inthres)
+      int16_t showTrafficLight(int16_t inval, const int16_t inthres)
         {
-          // int16_t mytmp = inval - inthres;
-          int16_t mytmp = inthres;
+          int16_t mytmp = inval - inthres;
+          //int16_t mytmp = inthres;
                   //SOUT("  mytmp "); SOUTLN(mytmp);
 
           if (mytmp <= -(int16_t) MQ135_EM_WIN)

@@ -1,0 +1,16 @@
+-------------------- Auto-Git Log --------------------
+		Tue Apr 27 2021 22:05:52 GMT+0200 (Mitteleuropäische Sommerzeit)
+------------------------------------------------------
+
+Modified files:
+* src/main.cpp
+* src/prj_config.h
+
+
+Created files:
+
+
+Deleted files:
+
+
+Renamed files:
